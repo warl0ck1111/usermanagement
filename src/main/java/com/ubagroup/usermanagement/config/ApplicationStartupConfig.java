@@ -26,28 +26,29 @@ public class ApplicationStartupConfig implements ApplicationListener<ContextRefr
     @Autowired
     private RoleService roleService;
 
-    @Autowired
-    private AppUserRepository appUserRepository;
 
-    @Value("${databaseAlreadySetup}")
+//    @Value("${databaseAlreadySetup}")
     private boolean databaseAlreadyConfigured;
 
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         log.info("onApplicationEvent");
-
-        if (getRoles().size() == 0) databaseAlreadyConfigured = false;
+        List<Role> roleList = getRoles();
+        for (Role r : roleList){
+            System.out.println(r.getName());
+        }
+        if (roleList.size() != 0) databaseAlreadyConfigured = true;
 
         if (!databaseAlreadyConfigured) {
-            log.info("database not configures");
+            log.info("database not configured");
             List<Role> roles = new ArrayList<>();
             for (AppUserRole role : AppUserRole.values()) {
                 roles.add(new Role(role.name()));
             }
             roleService.getRoleRepository().saveAll(roles);
         }else
-            log.info("database is configures");
+            log.info("database is configured");
 
 
     }
