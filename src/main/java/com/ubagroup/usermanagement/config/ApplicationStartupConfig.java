@@ -37,17 +37,17 @@ public class ApplicationStartupConfig implements ApplicationListener<ContextRefr
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         log.info("onApplicationEvent");
 
-        if (getRoles().size() == 0) databaseAlreadyConfigured = false;
+        databaseAlreadyConfigured = getRoles().size() != 0;
 
         if (!databaseAlreadyConfigured) {
-            log.info("database not configures");
+            log.info("database not configured");
             List<Role> roles = new ArrayList<>();
             for (AppUserRole role : AppUserRole.values()) {
                 roles.add(new Role(role.name()));
             }
             roleService.getRoleRepository().saveAll(roles);
         }else
-            log.info("database is configures");
+            log.info("database is configured");
 
 
     }

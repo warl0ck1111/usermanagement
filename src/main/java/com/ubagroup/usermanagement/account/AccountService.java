@@ -72,7 +72,7 @@ public class AccountService {
     }
 
     @Transactional
-    public AuthenticationResponse loginExternalUser(ExternalUserLoginRequest request) throws Exception {
+    public AuthenticationResponse loginExternalUser(ExternalUserLoginRequest request) throws RuntimeException {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
@@ -87,7 +87,9 @@ public class AccountService {
 
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
-        AppUser appUser = appUserRepository.findByEmail(request.getEmail()).get();
+        AppUser appUser = appUserRepository.findByEmail(request.getEmail()).orElseThrow(
+                () -> new ApiRequestException("app user not found.")
+        );
 
         final String jwt = jwtTokenUtil.generateToken(userDetails);
         return new AuthenticationResponse(jwt, "MERCHANT", appUser.getId().toString());
