@@ -34,6 +34,7 @@ public class ApplicationStartupConfig implements ApplicationListener<ContextRefr
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         log.info("onApplicationEvent");
+
         List<Role> roleList = getRoles();
         for (Role r : roleList){
             System.out.println(r.getName());

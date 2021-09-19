@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
 //                .antMatchers("/api/v1/role/**").access("hasRole('VIEWER')")
-                .antMatchers("/api/v1/auth/**", "/api/v1/roles/**", "/api/v1/auth/external-user/singup")
+                .antMatchers("/api/v1/auth/**", "/api/v1/roles/**", "/api/v1/auth/external-user/signup")
                 .permitAll().anyRequest().authenticated();
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
