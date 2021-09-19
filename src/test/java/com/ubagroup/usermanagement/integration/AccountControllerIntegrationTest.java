@@ -3,12 +3,14 @@ package com.ubagroup.usermanagement.integration;
 import com.ubagroup.usermanagement.account.ExternalUserLoginRequest;
 import com.ubagroup.usermanagement.account.ExternalUserRegistrationRequest;
 import com.ubagroup.usermanagement.account.InternalUserRegistrationLoginRequest;
+import com.ubagroup.usermanagement.appuser.AppUserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,9 @@ public class AccountControllerIntegrationTest {
     @LocalServerPort
     private Integer port;
 
+    @Autowired
+    AppUserRepository appUserRepository;
+
     private final String ROOT_URL = port + "/api/v1/auth";
 
     @BeforeEach
@@ -35,6 +40,7 @@ public class AccountControllerIntegrationTest {
 
     @AfterEach
     public void tearDown(){
+        appUserRepository.deleteAll();
     }
 
     @Test
