@@ -26,10 +26,8 @@ public class ApplicationStartupConfig implements ApplicationListener<ContextRefr
     @Autowired
     private RoleService roleService;
 
-    @Autowired
-    private AppUserRepository appUserRepository;
 
-    @Value("${databaseAlreadySetup}")
+//    @Value("${databaseAlreadySetup}")
     private boolean databaseAlreadyConfigured;
 
 
